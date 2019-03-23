@@ -6,7 +6,7 @@ module.exports.getEmployees = (req, res, next) => {
       return next(err);
     }
 
-    return res.json(...employees);
+    return res.json(employees);
   });
 };
 
@@ -20,9 +20,29 @@ module.exports.getEmployee = (req, res, next) => {
   });
 };
 
+module.exports.deleteEmployee = (req, res, next) => {
+  EmployeeModel.findByIdAndRemove({_id: req.params.id}, (err) => {
+    if (err) {
+      next.error(err)
+    }
+
+    return res.json({status: 'OK'})
+  })
+};
+
+module.exports.updateEmployee = (req, res, next) => {
+  EmployeeModel.findByIdAndUpdate({_id: req.params.id}, {$set: req.body}, (err) => {
+    if (err) {
+      next.error(err)
+    }
+
+    return res.json({status: 'OK'})
+  })
+};
+
 module.exports.createEmployee = async (req, res, next) => {
   try {
-    const employee = await EmployeeModel.createEmployee(req);
+    await EmployeeModel.createEmployee(req);
     res.status(201).json(
       {
         success: true,

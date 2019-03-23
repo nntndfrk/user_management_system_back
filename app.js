@@ -1,4 +1,5 @@
 const express = require('express');
+const createError = require('http-errors');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
@@ -47,8 +48,13 @@ process.on('SIGINT', () => {
 
 
 // apply routes
-app.use('/login', login);
-app.use('/employees', employees);
+app.use('/api/login', login);
+app.use('/api/employees', employees);
+
+// catch 404 and forward to error handler
+app.use((req, res, next) => {
+  next(createError(404));
+});
 
 app.listen(PORT, () => {
   console.info(`'Server is up and running on port ${PORT}`);

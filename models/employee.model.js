@@ -35,4 +35,11 @@ EmployeeSchema.pre('save', function (next) {
 EmployeeSchema.statics.createEmployee = function (req) {
   return this.create(req.body);
 };
+
+EmployeeSchema.statics.deleteEmployee = function (req) {
+  return this.findByIdAndRemove(req.params.id, function () {
+    
+  });
+};
+
 module.exports = mongoose.model('Employee', EmployeeSchema);
