@@ -20,12 +20,15 @@ const employees = require('./routes/employees.route');
 // create app
 const app = express();
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({extended: false}));
 app.use(cookieParser());
 app.use(passport.initialize());
 
 // connect to mongoDB
-mongoose.connect(`mongodb://${DB_USER}:${DB_PASSWORD}@${DB_URL}:${DB_PORT}/${DB_NAME}`, {useCreateIndex: true, useNewUrlParser: true});
+mongoose.connect(`mongodb://${DB_USER}:${DB_PASSWORD}@${DB_URL}:${DB_PORT}/${DB_NAME}`, {
+  useCreateIndex: true,
+  useNewUrlParser: true
+});
 
 mongoose.connection.on('connected', () => {
   console.log('mongo connected');
@@ -40,7 +43,7 @@ mongoose.connection.on('disconnected', () => {
 });
 
 process.on('SIGINT', () => {
-  mongoose.connection.close( () => {
+  mongoose.connection.close(() => {
     console.log('Mongoose default connection disconnected through app termination');
     process.exit(0);
   });
@@ -50,6 +53,10 @@ process.on('SIGINT', () => {
 // apply routes
 app.use('/api/login', login);
 app.use('/api/employees', employees);
+
+app.get('/', function (req, res) {
+  res.send("<h2>Привет Express!</h2>");
+});
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
