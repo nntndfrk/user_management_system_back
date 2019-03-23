@@ -5,7 +5,7 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const passport = require('passport');
 require('./configs/passport.config')(passport);
-const PORT = 80;
+const PORT = process.env.PORT || 5000;
 
 const {
   DB_URL,
