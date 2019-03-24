@@ -56,6 +56,8 @@ app.use(express.static(__dirname + '/public'));
 app.use('/api/login', login);
 app.use('/api/employees', employees);
 
+
+// render SPA index page
 app.get('/', function (req, res) {
   res.render('index');
 });
