@@ -49,13 +49,15 @@ process.on('SIGINT', () => {
   });
 });
 
+// apply frontend
+app.use(express.static(__dirname + '/public'));
 
 // apply routes
 app.use('/api/login', login);
 app.use('/api/employees', employees);
 
 app.get('/', function (req, res) {
-  res.send("<h2>Привет Express!</h2>");
+  res.render('index');
 });
 
 // catch 404 and forward to error handler
